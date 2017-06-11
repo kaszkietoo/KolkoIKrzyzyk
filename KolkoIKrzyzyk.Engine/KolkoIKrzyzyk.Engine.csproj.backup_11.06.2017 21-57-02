@@ -64,11 +64,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <CO_FirstProject>True</CO_FirstProject>
-    <CO_LastProject>True</CO_LastProject>
-    <CO_Config>Release|AnyCPU</CO_Config>
-    <CO_ProjectFilePath>..\KolkoIKrzyzyk_Release_AnyCPU.obproj</CO_ProjectFilePath>
-  </PropertyGroup>
-  <Import Project="..\CryptoObfuscator.targets" />
 </Project>

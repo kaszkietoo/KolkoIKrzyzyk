@@ -1,0 +1,32 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
+
+<UsingTask TaskName="CryptoObfuscator" AssemblyFile="..\MSBuildIntegration.dll"/>
+
+<Target Name="BeforeCompile" Condition=" ('$(Configuration)|$(Platform)' == '$(CO_Config)' Or '$(Configuration)' == '$(CO_Config)') And $(CO_FirstProject)=='True' "> 
+<CryptoObfuscator ProjectFile="$(CO_ProjectFilePath)" BeforeBuild="True" LC="$(CO_LC)" CheckFullLicense="$(CO_CheckFullLicense)" />
+</Target> 
+
+
+<Target Name="AfterCompile" Condition=" ('$(Configuration)|$(Platform)' == '$(CO_Config)' Or '$(Configuration)' == '$(CO_Config)') And $(CO_LastProject)=='True'">
+
+<CryptoObfuscator ProjectFile="$(CO_ProjectFilePath)" LC="$(CO_LC)" CheckFullLicense="$(CO_CheckFullLicense)" BuildID="$(CO_BuildID)" MapFilesLocation="$(CO_MapFilesLocation)" 
+FailOnUnsuppressedWarning="$(CO_FailOnUnsuppressedWarning)" SaveWarningsToFile="$(CO_SaveWarningsToFile)" SaveSuppressedWarnings="$(CO_SaveSuppressedWarnings)" SaveUnsuppressedWarnings="$(CO_SaveUnsuppressedWarnings)" AdditionalParameters="$(CO_AdditionalParameters)">
+<Output TaskParameter="Executed" PropertyName="CO_Executed" />
+</CryptoObfuscator>
+
+<Copy SourceFiles="@(CO_ObjFiles)" DestinationFiles="@(CO_BinFiles)"  Condition=" '$(CO_Executed)' == 'True' "/>
+
+</Target> 
+
+<Target Name="AfterBuild" Condition=" ('$(Configuration)|$(Platform)' == '$(CO_Config)' Or '$(Configuration)' == '$(CO_Config)') And $(CO_XapProject)=='True' ">
+
+<CryptoObfuscator ProjectFile="$(CO_ProjectFilePath)" LC="$(CO_LC)" CheckFullLicense="$(CO_CheckFullLicense)" BuildID="$(CO_BuildID)" MapFilesLocation="$(CO_MapFilesLocation)" 
+FailOnUnsuppressedWarning="$(CO_FailOnUnsuppressedWarning)" SaveWarningsToFile="$(CO_SaveWarningsToFile)" SaveSuppressedWarnings="$(CO_SaveSuppressedWarnings)" SaveUnsuppressedWarnings="$(CO_SaveUnsuppressedWarnings)" AdditionalParameters="$(CO_AdditionalParameters)">
+<Output TaskParameter="Executed" PropertyName="CO_Executed" />
+</CryptoObfuscator>
+
+<Copy SourceFiles="$(CO_XapOutput)" DestinationFiles="$(OutputPath)$(XapFilename)" Condition=" '$(CO_Executed)' == 'True' "/>
+
+</Target> 
+
+</Project> 
