@@ -71,4 +71,7 @@
     <CO_ProjectFilePath>..\KolkoIKrzyzyk_Release_AnyCPU.obproj</CO_ProjectFilePath>
   </PropertyGroup>
   <Import Project="..\CryptoObfuscator.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>co.exe</PostBuildEvent>
+  </PropertyGroup>
 </Project>
